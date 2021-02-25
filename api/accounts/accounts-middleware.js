@@ -64,24 +64,25 @@ function checkAccountNameUnique() {
   }
 
 function checkAccountId() {
-  return async (req, res, next) => {
-
-    try {
-      const account = await accounts.getById(req.params.id)
-      if(account) {
-        req.account = account 
-        next()
-      } else {
-        res.status(404).json({
-          message: "Account not found"
+  return (req,res,next) => {
+    accounts.getById(req.params.id)
+    .then((action) => {
+        if (action) {
+            req.action = action
+            next()
+        } else {
+            res.status(404).json({
+                message: "Action not found"
+            })
+        }
+    })
+    .catch((err) => {
+        console.log(err)
+        res.status(500).json({
+            message: "Error rerieving action"
         })
-      }
-      
-    } catch (err) {
-      next(err)
-    }
-    
-  }
+    })
+}
 }
 
 module.exports = { 

@@ -45,14 +45,18 @@ router.put('/:id', checkAccountPayload(), checkAccountId(), async (req, res, nex
   }
 });
 
-// router.delete('/:id', (req, res, next) => {
-//   try{
+router.delete('/:id', checkAccountId(), async (req, res, next) => {
+  try{
 
-//   }
-//   catch(err){
-//     next(err)
-//   }
-// })
+    await accounts.deleteById(req.params.id)
+
+    res.status(204).end()
+
+  }
+  catch(err){
+    next(err)
+  }
+})
 
 router.use((err, req, res, next) => { // eslint-disable-line
   // CALL next(err) IF THE PROMISE REJECTS INSIDE YOUR ENDPOINTS
