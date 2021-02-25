@@ -1,24 +1,52 @@
 const router = require('express').Router()
+const accounts = require("./accounts-model")
+// const { checkAccountPayload, checkAccountNameUnique, checkAccountId} = require ("./accounts-middleware")
 
 router.get('/', async (req, res, next) => {
-  // DO YOUR MAGIC
+  try{
+    const account = await accounts.getAll()
+    res.json(account)
+  }
+  catch(err){
+    next(err)
+  }
 })
 
-router.get('/:id', (req, res, next) => {
-  // DO YOUR MAGIC
-})
+// router.get('/:id', (req, res, next) => {
+//   try{
 
-router.post('/', (req, res, next) => {
-  // DO YOUR MAGIC
-})
+//   }
+//   catch(err){
+//     next(err)
+//   }
+// })
 
-router.put('/:id', (req, res, next) => {
-  // DO YOUR MAGIC
-});
+// router.post('/', (req, res, next) => {
+//   try{
 
-router.delete('/:id', (req, res, next) => {
-  // DO YOUR MAGIC
-})
+//   }
+//   catch(err){
+//     next(err)
+//   }
+// })
+
+// router.put('/:id', (req, res, next) => {
+//   try{
+
+//   }
+//   catch(err){
+//     next(err)
+//   }
+// });
+
+// router.delete('/:id', (req, res, next) => {
+//   try{
+
+//   }
+//   catch(err){
+//     next(err)
+//   }
+// })
 
 router.use((err, req, res, next) => { // eslint-disable-line
   // CALL next(err) IF THE PROMISE REJECTS INSIDE YOUR ENDPOINTS
