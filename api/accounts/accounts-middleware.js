@@ -21,7 +21,7 @@ function checkAccountPayload() {
       })
     }
 
-    if (req.body.budget !== "number"){
+    if (typeof req.body.budget !== "number"){
       return res.status(400).json({
         message: "budget of account must be a number"
       })
