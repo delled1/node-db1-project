@@ -38,21 +38,30 @@ function checkAccountPayload() {
 
 function checkAccountNameUnique() {
   return async (req, res, next) => {
+    
     try {
-      const [accountName] = await accounts.getById({ name: req.body.name})
-
-      if (accountName) {
-        return res.status(400).json({
-          message: "that name is taken" 
-        })
+      const allNames = await accounts.getAll()
+      const names = allNames.map(account => account.name)
+      let name
+      if(req.params.id){
+        const result = await accounts.getById(req.params.id)
+        name = result.name
+      } 
+      if(name === req.body.name){
+        return next()
       }
-
+      if(names.includes(req.body.name)){
+        res.status(400).json({
+          message: 'that name is taken'
+        })
+      } else {
+        next()
+      }
     } catch (err) {
-      next(err)
+        next(err)
     }
   }
-  
-}
+  }
 
 function checkAccountId() {
   return async (req, res, next) => {

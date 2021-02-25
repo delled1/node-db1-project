@@ -23,7 +23,7 @@ router.get('/:id', async  (req, res, next) => {
   }
 })
 
-router.post('/', checkAccountPayload(), async (req, res, next) => {
+router.post('/', checkAccountNameUnique(), checkAccountPayload(), async (req, res, next) => {
   try{
 
     const account = await accounts.create(req.body)
